@@ -9,6 +9,6 @@ export class ShopsService {
   constructor(private http: HttpClient) { }
 
   getShops(page: number){
-    return this.http.get("http://localhost:8080/shops?page="+ page + "&size=8" );
+    return this.http.get("http://localhost:8080/shops?page="+ page + "&size=9" );
   }
 }

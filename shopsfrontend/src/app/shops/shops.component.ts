@@ -12,6 +12,7 @@ export class ShopsComponent implements OnInit {
 
   shops: Shop[];
   Math: any;
+  page: number = 1;
 
   constructor(private shopsService: ShopsService) {
     this.Math = Math;
@@ -22,8 +23,11 @@ export class ShopsComponent implements OnInit {
   }
 
   getServices(){
-    this.shopsService.getShops(0).subscribe((data : [Shop[]]) => this.shops = data["content"]);
+    this.shopsService.getShops(this.page -1).subscribe((data : [Shop[]]) => this.shops = data["content"]);
   }
 
-
+  pageChange(page: number){
+    this.page = page;
+    this.getServices();
+  }
 }

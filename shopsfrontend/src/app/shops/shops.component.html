@@ -13,18 +13,30 @@
         <img class ="card-img-top" src={{s.picture}} height="300"/>
         <div class="card-body">
           <div style="text-align: center">
-            <a href="patients.html" class="btn btn-outline-secondary" style="background-color:red; width: 45%"> dislike</a>
-            <a href="patients.html" class="btn btn-outline-secondary" style="background-color:green; width: 45%"> like</a>
+            <a href="patients.html" class="btn btn-outline-danger m-1" style="width: 40%"> dislike</a>
+            <a href="patients.html" class="btn btn-outline-success m-1" style="width: 40%"> like</a>
           </div>
         </div>
       </div>
 
     </div>
+
+
   </div>
 
-
+  <div class="mt-2">
+    <ul class="pagination" *ngIf=" page == 1">
+      <li class="page-item"><a class="page-link" style="color:dodgerblue;">1</a></li>
+      <li class="page-item"><a class="page-link" (click)="pageChange(2)">2</a></li>
+      <li class="page-item"><a class="page-link" (click)="pageChange(3)">3</a></li>
+    </ul>
+    <ul class="pagination" *ngIf=" page != 1">
+      <li class="page-item"><a class="page-link" (click)="pageChange(page- 1)">{{page - 1}}</a></li>
+      <li class="page-item"><a class="page-link" style="color:dodgerblue;" (click)="pageChange(page)">{{page}}</a></li>
+      <li class="page-item"><a class="page-link" (click)="pageChange(page +1)">{{page + 1}}</a></li>
+    </ul>
+  </div>
 </div>
-<br/><br/>
 
 
 
