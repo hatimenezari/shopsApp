@@ -1,0 +1,20 @@
+<section class="container bg-light ml-auto mt-3 p-5">
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+
+    <div class="form-group" >
+      <label for="email" >Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="valid@mail.com"
+             ngModel name="email" required>
+    </div>
+
+    <div class="form-group" >
+      <label for="password" >Password:</label>
+      <input type="password" class="form-control" id="password"
+             ngModel name="password" required>
+    </div>
+    <input [disabled]="!f.valid " type="submit" class="btn btn-success ml-2 float-right" value="sign in"/>
+    <input [disabled]="!f.valid"  class="btn btn-primary float-right" value="sign in" />
+  </form>
+
+</section>
+

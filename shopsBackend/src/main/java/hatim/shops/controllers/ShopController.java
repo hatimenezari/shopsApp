@@ -20,4 +20,7 @@ public class ShopController {
     public Page<Shop> getShops(Pageable p){
         return shopServices.getShops(p);
     }
+
+
+
 }
