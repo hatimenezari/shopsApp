@@ -1,11 +1,13 @@
 package hatim.shops.services;
 
+import hatim.shops.entities.Shop;
 import hatim.shops.entities.User;
 import hatim.shops.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -30,5 +32,12 @@ public class UserServices {
         return false;
     }
 
+    public User findByEmail(String mail) {
+        return userRepo.findByEmail(mail);
+    }
 
+
+    public void updateUser(User user){
+        userRepo.save(user);
+    }
 }

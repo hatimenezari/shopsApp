@@ -19,15 +19,19 @@ export class ShopsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getServices();
+    this.getShops();
   }
 
-  getServices(){
+  getShops(){
     this.shopsService.getShops(this.page -1).subscribe((data : [Shop[]]) => this.shops = data["content"]);
   }
 
   pageChange(page: number){
     this.page = page;
-    this.getServices();
+    this.getShops();
+  }
+
+  addLikedShop(s: Shop){
+    this.shopsService.addLikedShop(s).subscribe(()=> this.getShops());
   }
 }
