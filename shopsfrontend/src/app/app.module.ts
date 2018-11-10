@@ -8,12 +8,14 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import { LikedShopsComponent } from './liked-shops/liked-shops.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShopsComponent,
-    LoginComponent
+    LoginComponent,
+    LikedShopsComponent
   ],
   imports: [
     BrowserModule,

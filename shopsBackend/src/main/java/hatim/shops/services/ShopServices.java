@@ -5,6 +5,7 @@ import hatim.shops.entities.User;
 import hatim.shops.repositories.ShopRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +43,20 @@ public class ShopServices {
         likedShops.add(shop);
         user.setShops(likedShops);
         userServices.updateUser(user);
+    }
+
+    /*
+        Since the liked shops are accessible through the user object
+        we have to convert the list into the page the user wants
+        this solution uses the pageImpl<> constructor along with sublist.
+        Since sublist is used we have to check if the end of the page is still within the list bounds.
+     */
+    public Page<Shop> getLikedShops(Pageable p, String mail) {
+        User user = userServices.findByEmail(mail);
+        List<Shop> likedShops = user.getShops();
+        int start = (int) p.getOffset();
+        int end =(start + p.getPageSize() > likedShops.size())? likedShops.size (): (int) p.getOffset() + p.getPageSize();
+        Page<Shop> page = new PageImpl<>(user.getShops().subList(start,end), p , user.getShops().size());
+        return page;
     }
 }

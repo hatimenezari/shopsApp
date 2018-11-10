@@ -34,6 +34,12 @@ public class ShopController {
         return shopServices.getShops(p, mail);
     }
 
+    @RequestMapping("/likedShops")
+    public Page<Shop> getLikedShops(Pageable p, @RequestHeader HttpHeaders headers){
+        String mail = getMail(headers);
+        return shopServices.getLikedShops(p, mail);
+    }
+
     @RequestMapping(method = RequestMethod.POST,value="/addLikedShop")
     public void addLikedShop(@RequestBody Shop shop, @RequestHeader HttpHeaders headers){
         String mail = getMail(headers);
