@@ -12,9 +12,11 @@ export class ShopsService {
   constructor(private http: HttpClient, private userService: UserService) { }
 
   getShops(page: number){
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.userService.user.email+
+    let headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.userService.user.email+
         ':' + this.userService.user.password) });
-    return this.http.get(this.URL+"/shops?page="+ page + "&size=9" , {headers});
+    headers = headers.append('Location', btoa(""+this.userService.user.coordinates.x +
+      ":" + this.userService.user.coordinates.y));
+    return this.http.get(this.URL+"/nearShops?page="+ page + "&size=9" , {headers});
   }
 
   getLikedShops(page: number){

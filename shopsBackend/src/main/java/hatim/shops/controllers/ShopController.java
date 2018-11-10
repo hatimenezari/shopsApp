@@ -1,5 +1,6 @@
 package hatim.shops.controllers;
 
+import hatim.shops.entities.Coordinates;
 import hatim.shops.entities.Shop;
 import hatim.shops.entities.User;
 import hatim.shops.services.ShopServices;
@@ -28,10 +29,22 @@ public class ShopController {
         return credentials[0];
     }
 
+    private Coordinates getCoords(HttpHeaders headers){
+        Coordinates coords = new Coordinates();
+        String locationb64 = headers.get("Location").toString();
+        locationb64 = locationb64.substring(1, locationb64.length()-1);
+        String[] location = new String(Base64.getDecoder().decode(locationb64)).split(":");
+        coords.setY(Double.valueOf(location[0]));
+        coords.setX(Double.valueOf(location[1]));
+        return coords;
+    }
+
+
     @RequestMapping("/shops")
     public Page<Shop> getShops(Pageable p, @RequestHeader HttpHeaders headers){
         String mail = getMail(headers);
-        return shopServices.getShops(p, mail);
+        Coordinates coords = getCoords(headers);
+        return shopServices.getShops(p, mail,coords);
     }
 
     @RequestMapping("/likedShops")
@@ -39,6 +52,14 @@ public class ShopController {
         String mail = getMail(headers);
         return shopServices.getLikedShops(p, mail);
     }
+
+    @RequestMapping("/nearShops")
+    public Page<Shop> getNearShops(Pageable p, @RequestHeader HttpHeaders headers){
+        String mail = getMail(headers);
+        Coordinates coords = getCoords(headers);
+        return shopServices.getNearShops(p, mail, coords);
+    }
+
 
     @RequestMapping(method = RequestMethod.POST,value="/addLikedShop")
     public void addLikedShop(@RequestBody Shop shop, @RequestHeader HttpHeaders headers){

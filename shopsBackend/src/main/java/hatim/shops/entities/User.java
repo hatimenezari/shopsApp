@@ -29,8 +29,8 @@ public class User {
     public User() {
     }
 
-    public User(int id, String email, String password, List<Shop> shops) {
-        this.id = id;
+
+    public User(String email, String password, List<Shop> shops) {
         this.email = email;
         this.password = password;
         this.shops = shops;
@@ -70,3 +70,4 @@ public class User {
 
 
 }
+

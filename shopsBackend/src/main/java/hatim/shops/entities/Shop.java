@@ -11,20 +11,21 @@ public class Shop {
     private String name;
     /*
         Using String to store a picture
-        because pictures are gonna be stored in base64 encoding
+        because pictures are gonna be stored in a base64 encoding
         to make sending through http easier
      */
     @Lob
     @Column(columnDefinition="LONGTEXT")
     private String picture;
+    private Coordinates coordinates;
 
     public Shop() {
     }
 
-    public Shop(int id, String name, String picture) {
-        this.id = id;
+    public Shop(String name, String picture, Coordinates coordinates) {
         this.name = name;
         this.picture = picture;
+        this.coordinates = coordinates;
     }
 
     public int getId() {
@@ -49,5 +50,13 @@ public class Shop {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }

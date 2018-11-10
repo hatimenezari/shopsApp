@@ -1,5 +1,6 @@
 package hatim.shops.services;
 
+import hatim.shops.entities.Coordinates;
 import hatim.shops.entities.Shop;
 import hatim.shops.entities.User;
 import hatim.shops.repositories.ShopRepo;
@@ -25,12 +26,19 @@ public class ShopServices {
         we then get the list of already liked shops and store their ids in a list
         that list gets passed to the repo function that does the not in query to get the 'not liked' shops
      */
-    public Page<Shop> getShops(Pageable p, String mail) {
+    public Page<Shop> getShops(Pageable p, String mail, Coordinates coords) {
         User user = userServices.findByEmail(mail);
         List<Integer> likedShopsIds = new ArrayList<>();
         user.getShops().forEach((Shop s) -> likedShopsIds.add(s.getId()));
         return shopRepo.findAllByIdNotIn(likedShopsIds, p);
     }
+
+
+    public Page<Shop> getNearShops(Pageable p,String mail, Coordinates coords){
+        User user = userServices.findByEmail(mail);
+        return shopRepo.findAllAndOrderByDistance(user.getId(), coords.getX(), coords.getY(), p);
+    }
+
 
     /*
     similarly we start by getting the user
@@ -57,6 +65,7 @@ public class ShopServices {
         int start = (int) p.getOffset();
         int end =(start + p.getPageSize() > likedShops.size())? likedShops.size (): (int) p.getOffset() + p.getPageSize();
         Page<Shop> page = new PageImpl<>(user.getShops().subList(start,end), p , user.getShops().size());
+
         return page;
     }
 
