@@ -30,12 +30,18 @@ export class LoginComponent implements OnInit {
     }
     this.user = new User(0,f.value.email, f.value.password, this.coordinates);
     this.userService.login(this.user).subscribe((response) => {
-        this.userService.loged = true;
+        this.router.navigate(["/shops"]);
         this.userService.user = this.user;
       }
     );
 
   }
 
+  signup(f: NgForm){
+    this.user = new User(0,f.value.email, f.value.password, this.coordinates);
+    this.userService.signup(this.user).subscribe((response) => {
+      alert("your account has been successfully created");
+    })
+  }
 
 }

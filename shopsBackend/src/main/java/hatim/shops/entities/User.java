@@ -17,13 +17,12 @@ public class User {
         Join table is preferable to foreign key
         to avoid duplications in database
     */
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="likedshops",
             joinColumns = @JoinColumn( name="user_id"),
             inverseJoinColumns = @JoinColumn( name="shop_id")
     )
-            @JsonIgnore
     List<Shop> shops;
 
     public User() {

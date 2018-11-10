@@ -17,4 +17,11 @@ export class UserService {
       password: credentials.password
     } );
   }
+
+  signup(credentials:User){
+    return this.http.post(this.URL +"/signup", {
+      email: credentials.email,
+      password: credentials.password
+    } );
+  }
 }
