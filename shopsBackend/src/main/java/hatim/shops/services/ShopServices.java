@@ -59,4 +59,14 @@ public class ShopServices {
         Page<Shop> page = new PageImpl<>(user.getShops().subList(start,end), p , user.getShops().size());
         return page;
     }
+
+    public void removeLikedShop(int id, String mail) {
+        User user = userServices.findByEmail(mail);
+        List<Shop> likedShops = user.getShops();
+        for(int i=0; i<likedShops.size(); i++){
+            if(likedShops.get(i).getId() == id)
+                likedShops.remove(i);
+        }
+        userServices.updateUser(user);
+    }
 }

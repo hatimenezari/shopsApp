@@ -28,4 +28,10 @@ export class ShopsService {
         ':' + this.userService.user.password) });
     return this.http.post(this.URL + "/addLikedShop",s, {headers})
   }
+
+  removeLikedShop(s:Shop){
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.userService.user.email+
+        ':' + this.userService.user.password) });
+    return this.http.delete(this.URL + "/removeLikedShop/" + s.id, {headers});
+  }
 }

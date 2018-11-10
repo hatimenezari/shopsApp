@@ -30,5 +30,8 @@ export class LikedShopsComponent implements OnInit {
     this.getShops();
   }
 
+  removeLikedShop(s:Shop){
+    this.shopsService.removeLikedShop(s).subscribe(()=> this.getShops());
+  }
 
 }
