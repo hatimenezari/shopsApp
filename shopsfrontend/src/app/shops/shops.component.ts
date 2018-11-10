@@ -34,4 +34,8 @@ export class ShopsComponent implements OnInit {
   addLikedShop(s: Shop){
     this.shopsService.addLikedShop(s).subscribe(()=> this.getShops());
   }
+
+  addDisikedShop(s: Shop){
+    this.shopsService.addDislikedShop(s).subscribe(()=> this.getShops());
+  }
 }

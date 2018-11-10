@@ -20,11 +20,14 @@ public interface ShopRepo extends PagingAndSortingRepository<Shop, Integer> {
         The coordinates for the user come through http (Xu,Yu).
         To calculate the distance I used the formula: sqrt((Xs - Xu)^2 + (Ys- Yu)^2).
         I then sorted the result using those distance values.
-        The "not in" part excludes shops that are liked by the user because they do not appear in the main page.
+        The "not in" part excludes shops that are liked/disliked by the user because they do not appear in the main page.
      */
     @Query(value = "SELECT * FROM shopsapp.shop " +
             "Where id not in " +
-            "(select shop_id from shopsapp.likedshops where user_id = ?1) order by sqrt(pow(x - ?2,2) + pow(y - ?3,2)) desc"
+            "(select shop_id from shopsapp.likedshops where user_id = ?1)"+
+            " And id not in"+
+            "(select shop_id from shopsapp.dislikedshops where user_id = ?1)"+
+            " order by sqrt(pow(x - ?2,2) + pow(y - ?3,2)) desc"
             , nativeQuery = true)
     public Page<Shop> findAllAndOrderByDistance(int id,double x, double y, Pageable p);
 

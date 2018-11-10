@@ -31,6 +31,12 @@ export class ShopsService {
     return this.http.post(this.URL + "/addLikedShop",s, {headers})
   }
 
+  addDislikedShop(s: Shop){
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.userService.user.email+
+        ':' + this.userService.user.password) });
+    return this.http.post(this.URL + "/addDisikedShop",s, {headers})
+  }
+
   removeLikedShop(s:Shop){
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.userService.user.email+
         ':' + this.userService.user.password) });

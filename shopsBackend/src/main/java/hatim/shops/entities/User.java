@@ -25,14 +25,31 @@ public class User {
     )
     List<Shop> shops;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name="dislikedshops",
+            joinColumns = @JoinColumn( name="user_id"),
+            inverseJoinColumns = @JoinColumn( name="shop_id")
+    )
+    List<Shop> dislikedShops;
+
     public User() {
     }
 
 
-    public User(String email, String password, List<Shop> shops) {
+    public User(String email, String password, List<Shop> shops, List<Shop> dislikedShops) {
         this.email = email;
         this.password = password;
         this.shops = shops;
+        this.dislikedShops = dislikedShops;
+    }
+
+    public List<Shop> getDislikedShops() {
+        return dislikedShops;
+    }
+
+    public void setDislikedShops(List<Shop> dislikedShops) {
+        this.dislikedShops = dislikedShops;
     }
 
     public List<Shop> getShops() {

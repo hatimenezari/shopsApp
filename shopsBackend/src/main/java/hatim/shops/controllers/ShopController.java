@@ -67,6 +67,12 @@ public class ShopController {
         shopServices.addLikedShop(shop, mail);
     }
 
+    @RequestMapping(method = RequestMethod.POST,value="/addDisikedShop")
+    public void addDislikedShop(@RequestBody Shop shop, @RequestHeader HttpHeaders headers){
+        String mail = getMail(headers);
+        shopServices.addDislikedShop(shop, mail);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE,value="/removeLikedShop/{id}")
     public void removeLikedShop(@PathVariable int id, @RequestHeader HttpHeaders headers){
         String mail = getMail(headers);

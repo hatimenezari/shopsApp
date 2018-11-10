@@ -3,17 +3,17 @@
 <div class= "container">
 
 
-  <div class="row padding mt-2"  *ngFor="let dummy of ' '.repeat(Math.ceil(shops.length / 3)).split(''), let i = index">
+  <div class="row padding mt-2"  *ngFor="let dummy of ' '.repeat(Math.ceil(shops.length / 4)).split(''), let i = index">
 
-    <div class="col-md-4 d-flex align-items-stretch " *ngFor="let s of shops.slice(3*i, 3*(i+1)) ">
+    <div class="col-md-3 d-flex align-items-stretch " *ngFor="let s of shops.slice(4*i, 4*(i+1)) ">
 
       <div class="card">
         <h4> {{s.name}} </h4>
         <img class ="card-img-top" src={{s.picture}} height="300"/>
         <div class="card-body">
           <div style="text-align: center">
-            <a  class="btn btn-outline-danger m-1" style="width: 40%" > dislike</a>
-            <a  class="btn btn-outline-success m-1" style="width: 40%" (click)="addLikedShop(s)"> like</a>
+            <button  class="btn btn-outline-danger m-1" style="width: 40%" (click)="addDisikedShop(s)"> dislike</button>
+            <button  class="btn btn-outline-success m-1" style="width: 40%" (click)="addLikedShop(s)"> like</button>
           </div>
         </div>
       </div>

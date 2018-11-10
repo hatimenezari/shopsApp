@@ -3,9 +3,9 @@
 <div class= "container">
 
 
-  <div class="row padding mt-2"  *ngFor="let dummy of ' '.repeat(Math.ceil(shops.length / 3)).split(''), let i = index">
+  <div class="row padding mt-2"  *ngFor="let dummy of ' '.repeat(Math.ceil(shops.length / 4)).split(''), let i = index">
 
-    <div class="col-md-4 d-flex align-items-stretch " *ngFor="let s of shops.slice(3*i, 3*(i+1)) ">
+    <div class="col-md-3 d-flex align-items-stretch " *ngFor="let s of shops.slice(4*i, 4*(i+1)) ">
 
       <div class="card">
         <h4> {{s.name}} </h4>

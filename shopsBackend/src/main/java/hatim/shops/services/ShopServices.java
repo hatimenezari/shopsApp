@@ -10,8 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ShopServices {
@@ -78,4 +77,37 @@ public class ShopServices {
         }
         userServices.updateUser(user);
     }
+
+    public void removeDislikedShop(int id, User user) {
+        List<Shop> dislikedShops = user.getDislikedShops();
+        for(int i=0; i<dislikedShops.size(); i++){
+            if(dislikedShops.get(i).getId() == id)
+                dislikedShops.remove(i);
+        }
+        userServices.updateUser(user);
+    }
+
+    /*
+    when the user dislikes a shop after updating his disliked shops list
+    we have to set a timer (using the timer and timerTask classes) to delete the shop that was added to it after 2 hours
+    that way that the shop will appear again in his main page when the timerTask executes.
+     */
+    public void addDislikedShop(Shop shop, String mail) {
+        User user = userServices.findByEmail(mail);
+        List<Shop> dislikedShops = user.getDislikedShops();
+        dislikedShops.add(shop);
+        user.setDislikedShops(dislikedShops);
+        userServices.updateUser(user);
+        TimerTask task = new TimerTask() {
+            public void run() {
+                removeDislikedShop(shop.getId(), user);
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        int delay = 2*60*60*1000;
+        timer.schedule(task, delay);
+    }
+
+
 }
