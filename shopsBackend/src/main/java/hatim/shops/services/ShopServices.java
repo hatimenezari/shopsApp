@@ -20,10 +20,10 @@ public class ShopServices {
     @Autowired
     private UserServices userServices;
 
-    /*
+     /*
         First we have to get the user through the mail sent in the http header
         we then get the list of already liked shops and store their ids in a list
-        that list gets passed to the repo function that does the not in query to get the 'not liked' shops
+        that list gets passed to the repo function that does the not in query to get the 'not liked' shops.
      */
     public Page<Shop> getShops(Pageable p, String mail, Coordinates coords) {
         User user = userServices.findByEmail(mail);
@@ -38,11 +38,10 @@ public class ShopServices {
         return shopRepo.findAllAndOrderByDistance(user.getId(), coords.getX(), coords.getY(), p);
     }
 
-
     /*
-    similarly we start by getting the user
-    we add the shop to his liked shops list
-    then we update the user which just adds another liked shop to the likedShops table
+        Similarly we start by getting the user
+        we add the shop to his liked shops list
+        then we update the user which just adds another liked shop to the likedShops table.
      */
     public void addLikedShop(Shop shop, String mail) {
         User user = userServices.findByEmail(mail);
@@ -64,7 +63,6 @@ public class ShopServices {
         int start = (int) p.getOffset();
         int end =(start + p.getPageSize() > likedShops.size())? likedShops.size (): (int) p.getOffset() + p.getPageSize();
         Page<Shop> page = new PageImpl<>(user.getShops().subList(start,end), p , user.getShops().size());
-
         return page;
     }
 
@@ -88,9 +86,9 @@ public class ShopServices {
     }
 
     /*
-    when the user dislikes a shop after updating his disliked shops list
-    we have to set a timer (using the timer and timerTask classes) to delete the shop that was added to it after 2 hours
-    that way that the shop will appear again in his main page when the timerTask executes.
+        when the user dislikes a shop after updating his disliked shops list
+        we have to set a timer (using the timer and timerTask classes) to delete the shop that was added to it after 2 hours
+        that way that the shop will appear again in his main page when the timerTask executes.
      */
     public void addDislikedShop(Shop shop, String mail) {
         User user = userServices.findByEmail(mail);
@@ -104,10 +102,7 @@ public class ShopServices {
             }
         };
         Timer timer = new Timer("Timer");
-
         int delay = 2*60*60*1000;
         timer.schedule(task, delay);
     }
-
-
 }

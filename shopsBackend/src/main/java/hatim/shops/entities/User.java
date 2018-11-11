@@ -11,6 +11,7 @@ public class User {
     @Id
     @GeneratedValue
     private int id;
+    @Column(unique=true)
     private String email;
     private String password;
     /*

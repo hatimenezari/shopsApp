@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Base64;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ShopController {
 
     @Autowired
@@ -32,7 +32,8 @@ public class ShopController {
     private Coordinates getCoords(HttpHeaders headers){
         Coordinates coords = new Coordinates();
         String locationb64 = headers.get("Location").toString();
-        locationb64 = locationb64.substring(1, locationb64.length()-1);
+        locationb64 = locationb64.substring(1, locationb64.length()-1);// removing the first and last character because they're just
+                                                                        // brackets "[" "]" containing the location base 64 string
         String[] location = new String(Base64.getDecoder().decode(locationb64)).split(":");
         coords.setY(Double.valueOf(location[0]));
         coords.setX(Double.valueOf(location[1]));
@@ -40,24 +41,17 @@ public class ShopController {
     }
 
 
-    @RequestMapping("/shops")
-    public Page<Shop> getShops(Pageable p, @RequestHeader HttpHeaders headers){
+    @RequestMapping("/nearShops")
+    public Page<Shop> getNearShops(Pageable p, @RequestHeader HttpHeaders headers){
         String mail = getMail(headers);
         Coordinates coords = getCoords(headers);
-        return shopServices.getShops(p, mail,coords);
+        return shopServices.getNearShops(p, mail, coords);
     }
 
     @RequestMapping("/likedShops")
     public Page<Shop> getLikedShops(Pageable p, @RequestHeader HttpHeaders headers){
         String mail = getMail(headers);
         return shopServices.getLikedShops(p, mail);
-    }
-
-    @RequestMapping("/nearShops")
-    public Page<Shop> getNearShops(Pageable p, @RequestHeader HttpHeaders headers){
-        String mail = getMail(headers);
-        Coordinates coords = getCoords(headers);
-        return shopServices.getNearShops(p, mail, coords);
     }
 
 
