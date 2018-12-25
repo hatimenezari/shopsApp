@@ -14,6 +14,9 @@ public class UserController {
     @Autowired
     UserServices userServices;
 
+    private String mail = "hatim@mail.com";
+    private String password = "hatim";
+
     @RequestMapping(method = RequestMethod.POST, value="/signup")
     public void register(@RequestBody User user){
         userServices.register(user);
@@ -21,8 +24,28 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST,value="/signin")
     public ResponseEntity signin(@RequestBody User user){
+
+
         if(userServices.signin(user))
             return new ResponseEntity( HttpStatus.OK);
         return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+    }
+
+    public boolean isCorrectLogin(String mail){
+        if(this.mail.equals(mail))
+            return true;
+        return false;
+    }
+
+    public boolean isCorrectLoginPassword(String mail,String password){
+        if(this.mail.equals(mail))
+            if(this.password.equals(password))
+            return true;
+        return false;
+    }
+
+    public String getLogin(User user){
+        return user.getEmail();
     }
 }

@@ -16,13 +16,13 @@ export class ShopsService {
         ':' + this.userService.user.password) });
     headers = headers.append('Location', btoa(""+this.userService.user.coordinates.x +
       ":" + this.userService.user.coordinates.y));
-    return this.http.get(this.URL+"/nearShops?page="+ page + "&size=9" , {headers});
+    return this.http.get(this.URL+"/nearShops?page="+ page + "&size=8" , {headers});
   }
 
   getLikedShops(page: number){
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.userService.user.email+
         ':' + this.userService.user.password) });
-    return this.http.get(this.URL+"/likedShops?page="+ page + "&size=9" , {headers});
+    return this.http.get(this.URL+"/likedShops?page="+ page + "&size=8" , {headers});
   }
 
   addLikedShop(s: Shop){

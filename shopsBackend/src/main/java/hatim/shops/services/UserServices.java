@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -30,6 +31,14 @@ public class UserServices {
                 return true;
         }
         return false;
+    }
+
+    public List<String> getUsers(){
+        List<String> users = new ArrayList<>();
+        userRepo.findAll().forEach( user -> {
+            users.add(user.getEmail());
+        });
+        return users;
     }
 
     public User findByEmail(String mail) {
